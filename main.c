@@ -4,6 +4,8 @@
 
 #define MATRIX_SIZE 3
 
+// {{1, 2, 3}, {0, 1, 4}, {0, 0, 1}};
+
 int LUPDecompose(double **A, int N, double Tol, int *P);
 void LUPInvert(double **A, int *P, int N, double **IA);
 void LUPSolve(double **A, int *P, double *b, int N, double *x);
@@ -13,8 +15,6 @@ int main()
 {
     double **a = malloc(MATRIX_SIZE * sizeof(double *));
     double **Ia = malloc(MATRIX_SIZE * sizeof(double *));
-
-    /// double b[MATRIX_SIZE][MATRIX_SIZE] = {{1, 2, 3}, {0, 1, 4}, {0, 0, 1}};
     int *P = malloc(MATRIX_SIZE + 1 * sizeof(int));
     int LU_out = 0;
     double det = 0;
@@ -44,28 +44,30 @@ int main()
         printf("\n");
     }
 
-
     LUPDecompose(a, 3, 1.5, P);
     det = LUPDeterminant(a, P, MATRIX_SIZE);
     LUPInvert(a, P, MATRIX_SIZE, Ia);
 
-
     printf("INVERSE\n");
-        for (int i = 0; i < MATRIX_SIZE; i++)
+    for (int i = 0; i < MATRIX_SIZE; i++)
     {
         for (int j = 0; j < MATRIX_SIZE; j++)
             printf("%lf\t", Ia[i][j]);
         printf("\n");
     }
 
-
     printf("det: %lf\n", det);
     printf("LU dec out: %d\n", LU_out);
-
 
     for (int i = 0; i < MATRIX_SIZE; ++i)
         free(a[i]);
     free(a);
+
+    for (int i = 0; i < MATRIX_SIZE; ++i)
+        free(Ia[i]);
+    free(Ia);
+
+    free(P);
 
     return 0;
 }
