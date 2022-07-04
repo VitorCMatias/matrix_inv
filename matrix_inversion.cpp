@@ -1,4 +1,4 @@
-#include "matrix_inversion.h"
+#include "matrix_inversion.hpp"
 
 int LUPDecompose(double **A, int N, double Tol, int *P)
 {

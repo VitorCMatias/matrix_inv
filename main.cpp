@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "matrix_inversion.h"
+#include "matrix_inversion.hpp"
 
 int main()
 {
