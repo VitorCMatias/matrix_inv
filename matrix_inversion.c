@@ -140,6 +140,16 @@ void deallocate_matrix(double **matix)
 
 void inicializar_matriz_teste(double **matix)
 {
+    matix[0][0] = 1.0;
+    matix[0][1] = 1.0;
+    matix[0][2] = 1.0;
+    matix[1][0] = 1.0;
+    matix[1][1] = 2.0;
+    matix[1][2] = 1.0;
+    matix[2][0] = 1.0;
+    matix[2][1] = 1.0;
+    matix[2][2] = 2.0;
+    /*
     for (int i = 0; i < MATRIX_SIZE; i++)
     {
         for (int j = 0; j < MATRIX_SIZE; j++)
@@ -151,5 +161,11 @@ void inicializar_matriz_teste(double **matix)
             if (i == 2 && j == 2)
                 matix[i][j] = 1;
         }
-    }
+    }*/
+}
+
+void allocate_matrix(double **matrix, int size)
+{
+	for (int i = 0; i <= size; i++)
+		matrix[i] = malloc(size * sizeof(double *));
 }

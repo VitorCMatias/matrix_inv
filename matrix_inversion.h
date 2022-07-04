@@ -13,3 +13,4 @@ double LUPDeterminant(double **A, int *P, int N);
 void print_matrix(double **A);
 void deallocate_matrix(double **matix);
 void inicializar_matriz_teste(double **matix);
+void allocate_matrix(double **matrix, int size);
