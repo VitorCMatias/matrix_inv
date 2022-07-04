@@ -1,7 +1,6 @@
 #include "matrix_inversion.hpp"
 
-int LUPDecompose(double **A, int N, double Tol, int *P)
-{
+int LUPDecompose(double **A, int N, double Tol, int *P) {
     /* INPUT: A - array of pointers to rows of a square matrix having dimension N
      *        Tol - small tolerance number to detect failure when the matrix is near degenerate
      * OUTPUT: Matrix A is changed, it contains a copy of both matrices L-E and U as A=(L-E)+U such that P*A=L*U.
@@ -15,14 +14,12 @@ int LUPDecompose(double **A, int N, double Tol, int *P)
     for (i = 0; i <= N; i++)
         P[i] = i; // Unit permutation matrix, P[N] initialized with N
 
-    for (i = 0; i < N; i++)
-    {
+    for (i = 0; i < N; i++) {
         maxA = 0.0;
         imax = i;
 
         for (k = i; k < N; k++)
-            if ((absA = fabs(A[k][i])) > maxA)
-            {
+            if ((absA = fabs(A[k][i])) > maxA) {
                 maxA = absA;
                 imax = k;
             }
@@ -31,8 +28,7 @@ int LUPDecompose(double **A, int N, double Tol, int *P)
         if (maxA < Tol)
             return 0; // failure, matrix is degenerate
 
-        if (imax != i)
-        {
+        if (imax != i) {
             // pivoting P
             j = P[i];
             P[i] = P[imax];
@@ -47,8 +43,7 @@ int LUPDecompose(double **A, int N, double Tol, int *P)
             P[N]++;
         }
 
-        for (j = i + 1; j < N; j++)
-        {
+        for (j = i + 1; j < N; j++) {
             A[j][i] /= A[i][i];
 
             for (k = i + 1; k < N; k++)
@@ -59,21 +54,18 @@ int LUPDecompose(double **A, int N, double Tol, int *P)
     return 1; // decomposition done
 }
 
-void LUPSolve(double **A, int *P, double *b, int N, double *x)
-{
+void LUPSolve(double **A, int *P, double *b, int N, double *x) {
     /* INPUT: A,P filled in LUPDecompose; b - rhs vector; N - dimension
      * OUTPUT: x - solution vector of A*x=b
      */
-    for (int i = 0; i < N; i++)
-    {
+    for (int i = 0; i < N; i++) {
         x[i] = b[P[i]];
 
         for (int k = 0; k < i; k++)
             x[i] -= A[i][k] * x[k];
     }
 
-    for (int i = N - 1; i >= 0; i--)
-    {
+    for (int i = N - 1; i >= 0; i--) {
         for (int k = i + 1; k < N; k++)
             x[i] -= A[i][k] * x[k];
 
@@ -81,24 +73,20 @@ void LUPSolve(double **A, int *P, double *b, int N, double *x)
     }
 }
 
-void LUPInvert(double **A, int *P, int N, double **IA)
-{
+void LUPInvert(double **A, int *P, int N, double **IA) {
     /* INPUT: A,P filled in LUPDecompose; N - dimension
      * OUTPUT: IA is the inverse of the initial matrix
      */
 
-    for (int j = 0; j < N; j++)
-    {
-        for (int i = 0; i < N; i++)
-        {
+    for (int j = 0; j < N; j++) {
+        for (int i = 0; i < N; i++) {
             IA[i][j] = P[i] == j ? 1.0 : 0.0;
 
             for (int k = 0; k < i; k++)
                 IA[i][j] -= A[i][k] * IA[k][j];
         }
 
-        for (int i = N - 1; i >= 0; i--)
-        {
+        for (int i = N - 1; i >= 0; i--) {
             for (int k = i + 1; k < N; k++)
                 IA[i][j] -= A[i][k] * IA[k][j];
 
@@ -107,8 +95,7 @@ void LUPInvert(double **A, int *P, int N, double **IA)
     }
 }
 
-double LUPDeterminant(double **A, int *P, int N)
-{
+double LUPDeterminant(double **A, int *P, int N) {
     /* INPUT: A,P filled in LUPDecompose; N - dimension.
      * OUTPUT: Function returns the determinant of the initial matrix
      */
@@ -121,26 +108,21 @@ double LUPDeterminant(double **A, int *P, int N)
     return (P[N] - N) % 2 == 0 ? det : -det;
 }
 
-void print_matrix(double **matix)
-{
-    for (int i = 0; i < MATRIX_SIZE; ++i)
-    {
+void print_matrix(double **matix) {
+    for (int i = 0; i < MATRIX_SIZE; ++i) {
         for (int j = 0; j < MATRIX_SIZE; ++j)
             printf("%lf\t", matix[i][j]);
         printf("\n");
     }
 }
 
-void deallocate_matrix(double **matix)
-{
+void deallocate_matrix(double **matrix) {
     for (int i = 0; i <= MATRIX_SIZE; ++i)
-        free(matix[i]);
-    free(matix);
+        delete[]matrix[i];
+    delete[] matrix;
 }
 
-void inicializar_matriz_teste(double **matix)
-{
-    /*
+void inicializar_matriz_teste(double **matix) {
     matix[0][0] = 1.0;
     matix[0][1] = 1.0;
     matix[0][2] = 1.0;
@@ -149,9 +131,9 @@ void inicializar_matriz_teste(double **matix)
     matix[1][2] = 1.0;
     matix[2][0] = 1.0;
     matix[2][1] = 1.0;
-    matix[2][2] = 2.0;*/
+    matix[2][2] = 2.0;
 
-    matix[0][0] = -4.0;
+    /*matix[0][0] = -4.0;
     matix[0][1] = -4.0;
     matix[0][2] = -4.0;
     matix[0][3] = 4.0;
@@ -166,12 +148,14 @@ void inicializar_matriz_teste(double **matix)
     matix[3][0] = 4.0;
     matix[3][1] = -4.0;
     matix[3][2] = -4.0;
-    matix[3][3] = -4.0;
+    matix[3][3] = -4.0;*/
 
 }
 
-void allocate_matrix(double **matrix, int size)
-{
-	for (int i = 0; i <= size; i++)
-		matrix[i] = malloc(size * sizeof(double *));
+double **allocate_matrix(double **matrix) {
+    matrix = new double *[MATRIX_SIZE];
+    for (int i = 0; i <= MATRIX_SIZE; ++i) {
+        matrix[i] = new double[MATRIX_SIZE];
+    }
+    return matrix;
 }

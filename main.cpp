@@ -1,35 +1,44 @@
 #include <stdio.h>
 #include "matrix_inversion.hpp"
 
-int main()
-{
-    double **a = malloc(MATRIX_SIZE * sizeof(double *));
-    double **Ia = malloc(MATRIX_SIZE * sizeof(double *));
-    int *P = malloc(MATRIX_SIZE + 1 * sizeof(int));
+
+int main() {
+    double **a = nullptr;
+    double **Ia = nullptr;
+    int *P = new int[MATRIX_SIZE + 1];
     int LU_out = 0;
     double det = 0;
 
-    allocate_matrix(a,MATRIX_SIZE);
-    allocate_matrix(Ia,MATRIX_SIZE);
+    a = allocate_matrix(a);
+    Ia = allocate_matrix(Ia);
 
     inicializar_matriz_teste(a);
     print_matrix(a);
 
     LUPDecompose(a, MATRIX_SIZE, 1.5, P);
     det = LUPDeterminant(a, P, MATRIX_SIZE);
-    if(det != 0){
+    if (det != 0) {
         LUPInvert(a, P, MATRIX_SIZE, Ia);
 
         printf("INVERSE\n");
         print_matrix(Ia);
-    } else{
+    } else {
         printf("matrix is not inversible, det = 0\r\n");
     }
 
+    for (int i = 0; i <= MATRIX_SIZE; ++i)
+        delete[]a[i];
+    delete[] a;
 
-    deallocate_matrix(a);
-    deallocate_matrix(Ia);
-    free(P);
+    for (int i = 0; i <= MATRIX_SIZE; ++i)
+        delete[]Ia[i];
+    delete[] Ia;
+
+    //deallocate_matrix(a);
+    //deallocate_matrix(Ia);
+    delete[]P;
 
     return 0;
 }
+
+
