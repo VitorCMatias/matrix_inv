@@ -9,20 +9,23 @@ int main()
     int LU_out = 0;
     double det = 0;
 
-    for (int i = 0; i < MATRIX_SIZE; ++i)
-        a[i] = malloc(MATRIX_SIZE * sizeof(double *));
-    for (int i = 0; i < MATRIX_SIZE; ++i)
-        Ia[i] = malloc(MATRIX_SIZE * sizeof(double *));
+    allocate_matrix(a,MATRIX_SIZE);
+    allocate_matrix(Ia,MATRIX_SIZE);
 
     inicializar_matriz_teste(a);
     print_matrix(a);
 
-    LUPDecompose(a, 3, 1.5, P);
+    LUPDecompose(a, MATRIX_SIZE, 1.5, P);
     det = LUPDeterminant(a, P, MATRIX_SIZE);
-    LUPInvert(a, P, MATRIX_SIZE, Ia);
+    if(det != 0){
+        LUPInvert(a, P, MATRIX_SIZE, Ia);
 
-    printf("INVERSE\n");
-    print_matrix(Ia);
+        printf("INVERSE\n");
+        print_matrix(Ia);
+    } else{
+        printf("matrix is not inversible, det = 0\r\n");
+    }
+
 
     deallocate_matrix(a);
     deallocate_matrix(Ia);

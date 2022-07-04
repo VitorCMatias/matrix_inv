@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define MATRIX_SIZE 3
+#define MATRIX_SIZE 4
 
 // {{1, 2, 3}, {0, 1, 4}, {0, 0, 1}};
 

@@ -133,13 +133,14 @@ void print_matrix(double **matix)
 
 void deallocate_matrix(double **matix)
 {
-    for (int i = 0; i < MATRIX_SIZE; ++i)
+    for (int i = 0; i <= MATRIX_SIZE; ++i)
         free(matix[i]);
     free(matix);
 }
 
 void inicializar_matriz_teste(double **matix)
 {
+    /*
     matix[0][0] = 1.0;
     matix[0][1] = 1.0;
     matix[0][2] = 1.0;
@@ -148,20 +149,25 @@ void inicializar_matriz_teste(double **matix)
     matix[1][2] = 1.0;
     matix[2][0] = 1.0;
     matix[2][1] = 1.0;
-    matix[2][2] = 2.0;
-    /*
-    for (int i = 0; i < MATRIX_SIZE; i++)
-    {
-        for (int j = 0; j < MATRIX_SIZE; j++)
-        {
-            if (i == 0)
-                matix[i][j] = i + j + 1;
-            if (i == 1)
-                matix[i][j] = j * j;
-            if (i == 2 && j == 2)
-                matix[i][j] = 1;
-        }
-    }*/
+    matix[2][2] = 2.0;*/
+
+    matix[0][0] = -4.0;
+    matix[0][1] = -4.0;
+    matix[0][2] = -4.0;
+    matix[0][3] = 4.0;
+    matix[1][0] = -4.0;
+    matix[1][1] = -4.0;
+    matix[1][2] = 4.0;
+    matix[1][3] = -4.0;
+    matix[2][0] = -4.0;
+    matix[2][1] = 4.0;
+    matix[2][2] = -4.0;
+    matix[2][3] = -4.0;
+    matix[3][0] = 4.0;
+    matix[3][1] = -4.0;
+    matix[3][2] = -4.0;
+    matix[3][3] = -4.0;
+
 }
 
 void allocate_matrix(double **matrix, int size)
