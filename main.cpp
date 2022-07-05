@@ -5,7 +5,7 @@
 int main() {
     double **a = nullptr;
     double **Ia = nullptr;
-    int *P = new int[MATRIX_SIZE + 1];
+    int *P = new int[MATRIX_SIZE+1];
     int LU_out = 0;
     double det = 0;
 
@@ -15,7 +15,7 @@ int main() {
     inicializar_matriz_teste(a);
     print_matrix(a);
 
-    LUPDecompose(a, MATRIX_SIZE, 1.5, P);
+    LUPDecompose(a, MATRIX_SIZE, 1.0, P);
     det = LUPDeterminant(a, P, MATRIX_SIZE);
     if (det != 0) {
         LUPInvert(a, P, MATRIX_SIZE, Ia);

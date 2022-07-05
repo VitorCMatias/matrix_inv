@@ -11,7 +11,7 @@ int LUPDecompose(double **A, int N, double Tol, int *P) {
     int i, j, k, imax;
     double maxA, *ptr, absA;
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i <= N; i++)
         P[i] = i; // Unit permutation matrix, P[N] initialized with N
 
     for (i = 0; i < N; i++) {
