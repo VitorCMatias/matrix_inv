@@ -5,19 +5,34 @@
 #define MATRIX_SIZE 3
 
 // {{1, 2, 3}, {0, 1, 4}, {0, 0, 1}};
+class Matrix {
+private:
+    int size;
+    double **a = nullptr;
+    double **Ia = nullptr;
+    int *P = new int[MATRIX_SIZE + 1];
+    int LU_out = 0;
 
-int LUPDecompose(double **A, int N, double Tol, int *P);
+public:
+    Matrix(int size);
 
-void LUPInvert(double **A, int *P, int N, double **IA);
+    int LUPDecompose(double **A, int N, double Tol, int *P);
 
-void LUPSolve(double **A, int *P, double *b, int N, double *x);
+    void LUPInvert(double **A, int *P, int N, double **IA);
 
-double LUPDeterminant(double **A, int *P, int N);
+    void LUPSolve(double **A, int *P, double *b, int N, double *x);
 
-void print_matrix(double **A);
+    double LUPDeterminant(double **A, int *P, int N);
 
-void deallocate_matrix(double **matrix);
+    void print(double **A);
 
-void inicializar_matriz_teste(double **matix);
+    void deallocate_matrix(double **matrix);
 
-double **allocate_matrix(double **matrix);
+    void inicializar_matriz_teste();
+
+    double **allocate_matrix(double **matrix);
+
+    void invert();
+
+    void erase();
+};

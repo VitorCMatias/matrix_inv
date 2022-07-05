@@ -1,6 +1,13 @@
 #include "matrix_inversion.hpp"
 
-int LUPDecompose(double **A, int N, double Tol, int *P) {
+Matrix::Matrix(int size) {
+    this->size = size;
+
+    this->a = allocate_matrix(this->a);
+    this->Ia = allocate_matrix(this->Ia);
+}
+
+int Matrix::LUPDecompose(double **A, int N, double Tol, int *P) {
     /* INPUT: A - array of pointers to rows of a square matrix having dimension N
      *        Tol - small tolerance number to detect failure when the matrix is near degenerate
      * OUTPUT: Matrix A is changed, it contains a copy of both matrices L-E and U as A=(L-E)+U such that P*A=L*U.
@@ -54,7 +61,7 @@ int LUPDecompose(double **A, int N, double Tol, int *P) {
     return 1; // decomposition done
 }
 
-void LUPSolve(double **A, int *P, double *b, int N, double *x) {
+void Matrix::LUPSolve(double **A, int *P, double *b, int N, double *x) {
     /* INPUT: A,P filled in LUPDecompose; b - rhs vector; N - dimension
      * OUTPUT: x - solution vector of A*x=b
      */
@@ -73,7 +80,7 @@ void LUPSolve(double **A, int *P, double *b, int N, double *x) {
     }
 }
 
-void LUPInvert(double **A, int *P, int N, double **IA) {
+void Matrix::LUPInvert(double **A, int *P, int N, double **IA) {
     /* INPUT: A,P filled in LUPDecompose; N - dimension
      * OUTPUT: IA is the inverse of the initial matrix
      */
@@ -95,7 +102,7 @@ void LUPInvert(double **A, int *P, int N, double **IA) {
     }
 }
 
-double LUPDeterminant(double **A, int *P, int N) {
+double Matrix::LUPDeterminant(double **A, int *P, int N) {
     /* INPUT: A,P filled in LUPDecompose; N - dimension.
      * OUTPUT: Function returns the determinant of the initial matrix
      */
@@ -108,30 +115,30 @@ double LUPDeterminant(double **A, int *P, int N) {
     return (P[N] - N) % 2 == 0 ? det : -det;
 }
 
-void print_matrix(double **matix) {
+void Matrix::print(double **A) {
     for (int i = 0; i < MATRIX_SIZE; ++i) {
         for (int j = 0; j < MATRIX_SIZE; ++j)
-            printf("%lf\t", matix[i][j]);
+            printf("%lf\t", A[i][j]);
         printf("\n");
     }
 }
 
-void deallocate_matrix(double **matrix) {
+void Matrix::deallocate_matrix(double **matrix) {
     for (int i = 0; i < MATRIX_SIZE; ++i)
         delete matrix[i];
     delete matrix;
 }
 
-void inicializar_matriz_teste(double **matix) {
-    matix[0][0] = 1.0;
-    matix[0][1] = 1.0;
-    matix[0][2] = 1.0;
-    matix[1][0] = 1.0;
-    matix[1][1] = 2.0;
-    matix[1][2] = 1.0;
-    matix[2][0] = 1.0;
-    matix[2][1] = 1.0;
-    matix[2][2] = 2.0;
+void Matrix::inicializar_matriz_teste() {
+    this->a[0][0] = 1.0;
+    this->a[0][1] = 1.0;
+    this->a[0][2] = 1.0;
+    this->a[1][0] = 1.0;
+    this->a[1][1] = 2.0;
+    this->a[1][2] = 1.0;
+    this->a[2][0] = 1.0;
+    this->a[2][1] = 1.0;
+    this->a[2][2] = 2.0;
 
     /*matix[0][0] = -4.0;
     matix[0][1] = -4.0;
@@ -152,10 +159,31 @@ void inicializar_matriz_teste(double **matix) {
 
 }
 
-double **allocate_matrix(double**matrix) {
+double **Matrix::allocate_matrix(double **matrix) {
     matrix = new double *[MATRIX_SIZE];
     for (int i = 0; i < MATRIX_SIZE; ++i) {
         matrix[i] = new double[MATRIX_SIZE];
     }
     return matrix;
+}
+
+void Matrix::invert() {
+    double det = 0;
+
+    det = LUPDeterminant(this->a, this->P, MATRIX_SIZE);
+    if (det != 0) {
+        LUPDecompose(this->a, MATRIX_SIZE, 1.0, this->P);
+        LUPInvert(this->a, this->P, MATRIX_SIZE, this->Ia);
+
+        printf("INVERSE\n");
+        print(this->Ia);
+    } else {
+        printf("matrix is not inversible, det = 0\r\n");
+    }
+}
+
+void Matrix::erase() {
+    deallocate_matrix(a);
+    deallocate_matrix(Ia);
+    delete[]P;
 }
