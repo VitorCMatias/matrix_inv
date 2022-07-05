@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "matrix_inversion.hpp"
 
 
@@ -8,7 +7,7 @@ int main() {
 
     A.inicializar_matriz_teste();
     A.invert();
-
+    A.erase();
 
 
 
