@@ -26,16 +26,8 @@ int main() {
         printf("matrix is not inversible, det = 0\r\n");
     }
 
-    for (int i = 0; i <= MATRIX_SIZE; ++i)
-        delete[]a[i];
-    delete[] a;
-
-    for (int i = 0; i <= MATRIX_SIZE; ++i)
-        delete[]Ia[i];
-    delete[] Ia;
-
-    //deallocate_matrix(a);
-    //deallocate_matrix(Ia);
+    deallocate_matrix(a);
+    deallocate_matrix(Ia);
     delete[]P;
 
     return 0;
