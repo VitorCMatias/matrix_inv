@@ -32,7 +32,14 @@ public:
 
     void inicializar_matriz_teste();
 
+    void set_random(int lower, int upper);
+
     void invert();
 
     void erase();
+
+    double **get_matrix() const;
+
+    double **get_inverse() const;
+
 };

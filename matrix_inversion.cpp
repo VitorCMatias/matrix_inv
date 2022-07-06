@@ -118,7 +118,7 @@ void Matrix::print(double **A) const {
             printf("%lf", A[i][j]);
             j == size - 1 ? printf("]") : printf(",");
         }
-        i == size - 1 ? printf("]") : printf(",");
+        i == size - 1 ? printf("]\r\n") : printf(",");
     }
 }
 
@@ -171,9 +171,6 @@ void Matrix::invert() {
     if (det != 0) {
         LUPDecompose(1.0);
         LUPInvert();
-
-        printf("INVERSE\n");
-        print(this->Ia);
     } else {
         printf("matrix is not inversible, det = 0\r\n");
     }
@@ -190,4 +187,27 @@ void Matrix::deallocate(double **matrix) {
     for (int i = 0; i < this->size; ++i)
         delete matrix[i];
     delete matrix;
+}
+
+void Matrix::set_random(int lower, int upper)
+{
+    double **matrix = this->a;
+    int length = this->size;
+
+    lower*=100;
+    upper*=100;
+
+    for (int i = 0; i < length; ++i) {
+        for (int j = 0; j < length; ++j) {
+            matrix[i][j] = (double)((rand() % (upper - lower + 1)) + lower)/100;
+        }
+    }
+}
+
+double **Matrix::get_matrix() const {
+    return a;
+}
+
+double **Matrix::get_inverse() const {
+    return Ia;
 }
