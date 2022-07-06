@@ -19,8 +19,6 @@ private:
 
     void LUPInvert();
 
-    void LUPSolve(double **A, int *P, double *b, int N, double *x);
-
     double LUPDeterminant();
 
     double **allocate(double **matrix);

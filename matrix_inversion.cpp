@@ -65,25 +65,6 @@ int Matrix::LUPDecompose(double Tol) {
     return 1; // decomposition done
 }
 
-void Matrix::LUPSolve(double **A, int *P, double *b, int N, double *x) {
-    /* INPUT: A,P filled in LUPDecompose; b - rhs vector; N - dimension
-     * OUTPUT: x - solution vector of A*x=b
-     */
-    for (int i = 0; i < N; i++) {
-        x[i] = b[P[i]];
-
-        for (int k = 0; k < i; k++)
-            x[i] -= A[i][k] * x[k];
-    }
-
-    for (int i = N - 1; i >= 0; i--) {
-        for (int k = i + 1; k < N; k++)
-            x[i] -= A[i][k] * x[k];
-
-        x[i] /= A[i][i];
-    }
-}
-
 void Matrix::LUPInvert() {
     /* INPUT: A,P filled in LUPDecompose; N - dimension
      * OUTPUT: IA is the inverse of the initial matrix
@@ -129,10 +110,15 @@ double Matrix::LUPDeterminant() {
 
 void Matrix::print(double **A) const {
     const int size = this->size;
+
+    printf("[");
     for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j)
-            printf("%lf\t", A[i][j]);
-        printf("\n");
+        printf("[");
+        for (int j = 0; j < size; ++j){
+            printf("%lf", A[i][j]);
+            j == size - 1 ? printf("]") : printf(",");
+        }
+        i == size - 1 ? printf("]") : printf(",");
     }
 }
 
