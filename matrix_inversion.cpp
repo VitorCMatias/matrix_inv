@@ -169,7 +169,7 @@ void Matrix::invert() {
 
     det = LUPDeterminant();
     if (det != 0) {
-        LUPDecompose(1.0);
+        LUPDecompose(0.00001);
         LUPInvert();
     } else {
         printf("matrix is not inversible, det = 0\r\n");
